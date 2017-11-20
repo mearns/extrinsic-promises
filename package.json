@@ -1,0 +1,115 @@
+{
+  "name": "extrinsic-promises",
+  "version": "0.0.1",
+  "description": "A convenient promises anti-pattern: promises you can settle from outside the promise.",
+  "keywords": [
+    "promise", "promises", "a+",
+    "reactive", "callback"
+  ],
+  "main": "dist/src/index.js",
+  "scripts": {
+    "clean": "rimraf coverage/ .nyc_output/ dist/",
+    "check:lint:ci:travis-lint": "travis-lint .travis.yml",
+    "check:lint:ci:yaml": "yamllint .travis.yml",
+    "check:lint:ci": "npm-run-all --parallel check:lint:ci:*",
+    "check:lint:readme:markdown": "remark --no-stdout README.md",
+    "check:lint:readme": "npm-run-all --parallel check:lint:readme:*",
+    "check:lint:js:root": "standard ./*.js | snazzy",
+    "check:lint:js:src": "standard src/**/*.js | snazzy",
+    "check:lint:js:test": "standard test/**/*.js | snazzy",
+    "check:lint:js:npmpackagejsonlint-config": "standard ./npmpackagejsonlint.config.js | snazzy",
+    "check:lint:js:stryker-config": "standard ./stryker.conf.js | snazzy",
+    "check:lint:js": "npm-run-all --parallel check:lint:js:*",
+    "check:lint:package-json": "pjl-cli",
+    "check:lint": "npm-run-all --parallel check:lint:*",
+    "check": "npm-run-all --parallel check:*",
+    "test": "nyc mocha ./test/src/**/*.spec.js",
+    "verify": "npm-run-all check test",
+    "mutation-test": "stryker run",
+    "compile-prod:app": "babel src/ --out-dir dist/src/",
+    "compile-dev:app": "babel src/ --out-dir dist/src/ --plugins node-source-map-support --source-maps inline",
+    "compile-dev:test": "babel test/ --out-dir dist/test/ --plugins node-source-map-support --source-maps inline",
+    "compile:nop": "echo \"there are no common compile tasks defined, no problem.\"",
+    "compile-prod": "npm-run-all compile-prod:* compile:*",
+    "compile-dev": "npm-run-all compile-dev:* compile:*",
+    "compile": "if-env NODE_ENV=production && npm run compile-prod || npm run compile-dev",
+    "build": "npm-run-all clean verify compile"
+  },
+  "author": "Brian Mearns",
+  "homepage": "https://github.com/mearns/extrinsic-promises",
+  "bugs": {
+    "url": "https://github.com/mearns/extrinsic-promises/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mearns/extrinsic-promises.git"
+  },
+  "engines": {
+    "node": ">5.0.0 <9"
+  },
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-assign",
+      "transform-object-rest-spread"
+    ]
+  },
+  "nyc": {
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "require": [
+      "babel-core/register"
+    ],
+    "include": [
+      "src/**"
+    ],
+    "all": true,
+    "check-coverage": true,
+    "statements": 50,
+    "branches": 50,
+    "functions": 50,
+    "lines": 50
+  },
+  "devDependencies": {
+    "assets-webpack-plugin": "3.5.1",
+    "babel-cli": "6.26.0",
+    "babel-eslint": "8.0.1",
+    "babel-plugin-node-source-map-support": "0.0.1",
+    "babel-plugin-transform-object-assign": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "bluebird": "3.5.1",
+    "chai": "4.1.2",
+    "chai-as-promised": "7.1.1",
+    "copyfiles": "1.2.0",
+    "if-env": "1.0.0",
+    "lfsr": "0.0.3",
+    "mocha": "3.5.3",
+    "npm-package-json-lint": "2.11.0",
+    "npm-run-all": "4.1.1",
+    "nyc": "11.2.1",
+    "ramda": "0.25.0",
+    "remark-cli": "4.0.0",
+    "rimraf": "2.6.2",
+    "sinon": "4.1.1",
+    "sinon-chai": "2.14.0",
+    "snazzy": "7.0.0",
+    "source-map-support": "0.5.0",
+    "standard": "10.0.3",
+    "stryker": "0.12.0",
+    "stryker-api": "0.10.0",
+    "stryker-html-reporter": "0.10.0",
+    "stryker-mocha-framework": "0.6.0",
+    "stryker-mocha-runner": "0.9.0",
+    "travis-lint": "1.0.0",
+    "yaml-lint": "1.0.0"
+  },
+  "dependencies": {
+  }
+}

@@ -1,0 +1,10 @@
+npm-debug.log*
+node_modules/
+npmpackagejsonlist.config.js
+src/
+test/
+coverage/
+.nyc_output/
+reports/
+.travis.yml
+npm-shrinkwrap.json
