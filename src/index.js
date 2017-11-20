@@ -14,7 +14,7 @@ const builtinPromiseFactory = (wf) => new Promise(wf)
  * it just uses the given promise internally. The default is to use the
  * global `Promise` class.
  */
-export class ExtrinsicPromise {
+export default class ExtrinsicPromise {
   constructor (promiseFactory = builtinPromiseFactory) {
     let resolvedWith, rejectedFor
     let resolved = false

@@ -2,7 +2,7 @@
 /* eslint no-unused-expressions:0 */  // for expect magic.
 
 // Module under test
-import {ExtrinsicPromise} from '../../src/index'
+import ExtrinsicPromise from '../../src/index'
 
 // Support
 import chai, {expect} from 'chai'
