@@ -63,7 +63,11 @@ export class ExtrinsicPromise {
    */
   work (workFunction) {
     setImmediate(() => {
-      workFunction(this.resolve, this.reject)
+      try {
+        workFunction(this.resolve, this.reject)
+      } catch (error) {
+        this.reject(error)
+      }
     })
     return this
   }

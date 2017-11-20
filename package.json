@@ -3,8 +3,11 @@
   "version": "0.0.1",
   "description": "A convenient promises anti-pattern: promises you can settle from outside the promise.",
   "keywords": [
-    "promise", "promises", "a+",
-    "reactive", "callback"
+    "promise",
+    "promises",
+    "a+",
+    "reactive",
+    "callback"
   ],
   "main": "dist/src/index.js",
   "scripts": {
@@ -110,6 +113,5 @@
     "travis-lint": "1.0.0",
     "yaml-lint": "1.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
