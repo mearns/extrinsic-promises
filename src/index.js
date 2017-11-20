@@ -6,7 +6,7 @@
  * like you would from within a work function.
  */
 
-const builtinPromiseFactory = (...args) => new Promise(...args)
+const builtinPromiseFactory = (wf) => new Promise(wf)
 
 /**
  * Optional constructor parameter is a function that can be used to construct

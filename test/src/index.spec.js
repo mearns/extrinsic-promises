@@ -303,6 +303,27 @@ describe('extrinsic-promises', () => {
       return expect(promiseUnderTest).to.be.rejectedWith(testReason)
     })
   })
+
+  describe('when a custom promise constructor is provided that swaps resolve and reject', () => {
+    it('should reject when the .resolve() method is called', () => {
+      // given
+      const promiseUnderTest = new ExtrinsicPromise(wf => {
+        return new Promise(wf)
+          .then(
+            () => {
+              throw new Error('test-error')
+            },
+            () => 'fulfilled'
+          )
+      })
+
+      // when
+      promiseUnderTest.resolve()
+
+      // then
+      return expect(promiseUnderTest).to.be.rejectedWith('test-error')
+    })
+  })
 })
 
 class SynchronousPromise {
