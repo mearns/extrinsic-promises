@@ -123,58 +123,7 @@ describe('extrinsic-promises', () => {
   })
 
   describe('when a Promise calls the work function synchronously', () => {
-    class SynchronousPromise {
-      constructor (workfunction) {
-        this.state = 'pending'
-        this.onFulfill = []
-        this.onReject = []
-
-        const resolve = (withValue) => {
-          this.state = 'fulfilled'
-          this.fulfilledWith = withValue
-          this.onFulfill.forEach(h => this.handle(h, withValue))
-        }
-
-        const reject = (because) => {
-          this.state = 'rejected'
-          this.rejectedWith = because
-          this.onReject.forEach(h => this.handle(h, because))
-        }
-
-        try {
-          workfunction(resolve, reject)
-        } catch (error) {
-          reject(error)
-        }
-      }
-
-      handle ({handler, resolve, reject}, value) {
-        try {
-          resolve(handler(value))
-        } catch (error) {
-          reject(error)
-        }
-      }
-
-      then (onFulfill, onReject) {
-        if (this.state === 'pending') {
-          return new SynchronousPromise((resolve, reject) => {
-            this.onFulfill.push({handler: onFulfill, resolve, reject})
-            this.onReject.push({handler: onReject, resolve, reject})
-          })
-        } else if (this.state === 'fulfilled') {
-          return new SynchronousPromise((resolve, reject) => {
-            this.handle({handler: onFulfill, resolve, reject}, this.fulfilledWith)
-          })
-        } else if (this.state === 'rejected') {
-          return new SynchronousPromise((resolve, reject) => {
-            this.handle({handler: onReject, resolve, reject}, this.rejectedWith)
-          })
-        }
-      }
-    }
-
-    it('Should resolve promise when .resolve method is called', () => {
+    it('should resolve promise when .resolve method is called', () => {
       // given
       const testFulfill = 'test-value'
       const promiseUnderTest = new ExtrinsicPromise(wf => new SynchronousPromise(wf))
@@ -276,4 +225,149 @@ describe('extrinsic-promises', () => {
         .then(() => expect(workSpy).to.have.been.calledOnce)
     })
   })
+
+  describe('when promise constructor calls workfunction much later @slow', () => {
+    it('should resolve promise when .resolve method is called immediately', () => {
+      // given
+      const testFulfill = 'test-value'
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.resolve(testFulfill)
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should resolve even if .reject() is called after .resolve()', () => {
+      // given
+      const testFulfill = 'test-value'
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.reject(new Error('test-error'))
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should resolve with the initial value if .resolve() is called multiple times', () => {
+      // given
+      const testFulfill = 'test-value'
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.resolve('some other value')
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should reject promise when .reject method is called immediately', () => {
+      // given
+      const testReason = new Error('Test Reason')
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.reject(testReason)
+
+      // then
+      return expect(promiseUnderTest).to.be.rejectedWith(testReason)
+    })
+
+    it('should reject even if .reject() is called after .resolve()', () => {
+      // given
+      const testReason = new Error('Test Reason')
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.reject(testReason)
+      promiseUnderTest.resolve('some value')
+
+      // then
+      return expect(promiseUnderTest).to.be.rejectedWith(testReason)
+    })
+
+    it('should reject with the initial reason if .reject() is called multiple times', () => {
+      // given
+      const testReason = new Error('Test Reason')
+      const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
+
+      // when
+      promiseUnderTest.reject(testReason)
+      promiseUnderTest.reject(new Error('Some other reason'))
+
+      // then
+      return expect(promiseUnderTest).to.be.rejectedWith(testReason)
+    })
+  })
 })
+
+class SynchronousPromise {
+  constructor (workfunction) {
+    this.state = 'pending'
+    this.onFulfill = []
+    this.onReject = []
+
+    const resolve = (withValue) => {
+      this.state = 'fulfilled'
+      this.fulfilledWith = withValue
+      this.onFulfill.forEach(h => this.handle(h, withValue))
+    }
+
+    const reject = (because) => {
+      this.state = 'rejected'
+      this.rejectedWith = because
+      this.onReject.forEach(h => this.handle(h, because))
+    }
+
+    this._callWorkFunction(workfunction, resolve, reject)
+  }
+
+  _callWorkFunction (workfunction, resolve, reject) {
+    try {
+      workfunction(resolve, reject)
+    } catch (error) {
+      reject(error)
+    }
+  }
+
+  handle ({handler, resolve, reject}, value) {
+    try {
+      resolve(handler(value))
+    } catch (error) {
+      reject(error)
+    }
+  }
+
+  then (onFulfill, onReject) {
+    if (this.state === 'pending') {
+      return new SynchronousPromise((resolve, reject) => {
+        this.onFulfill.push({handler: onFulfill, resolve, reject})
+        this.onReject.push({handler: onReject, resolve, reject})
+      })
+    } else if (this.state === 'fulfilled') {
+      return new SynchronousPromise((resolve, reject) => {
+        this.handle({handler: onFulfill, resolve, reject}, this.fulfilledWith)
+      })
+    } else if (this.state === 'rejected') {
+      return new SynchronousPromise((resolve, reject) => {
+        this.handle({handler: onReject, resolve, reject}, this.rejectedWith)
+      })
+    }
+  }
+}
+
+class LaterPromise extends SynchronousPromise {
+  _callWorkFunction (workfunction, resolve, reject) {
+    setTimeout(() => {
+      try {
+        workfunction(resolve, reject)
+      } catch (error) {
+        reject(error)
+      }
+    }, 10)
+  }
+}
