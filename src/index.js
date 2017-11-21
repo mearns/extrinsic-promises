@@ -2,7 +2,7 @@
  * Creates a thenable promise that can be settled _extrinsically_,
  * meaning from outside of a provided work function. In fact, there is no
  * work function; in addition to `then`, the object exposes two methods,
- * `resolve` and `reject`, which you can call to settle the promise, just
+ * `fulfill` and `reject`, which you can call to settle the promise, just
  * like you would from within a work function.
  */
 
@@ -16,31 +16,31 @@ const builtinPromiseFactory = (wf) => new Promise(wf)
  */
 export default class ExtrinsicPromise {
   constructor (promiseFactory = builtinPromiseFactory) {
-    let resolvedWith, rejectedFor
-    let resolved = false
+    let fulfilledWith, rejectedFor
+    let fulfilled = false
     let rejected = false
-    this.resolve = (withValue) => {
-      if (!resolved && !rejected) {
-        resolved = true
-        resolvedWith = withValue
+    this.fulfill = (withValue) => {
+      if (!fulfilled && !rejected) {
+        fulfilled = true
+        fulfilledWith = withValue
       }
       return this
     }
     this.reject = (forReason) => {
-      if (!resolved && !rejected) {
+      if (!fulfilled && !rejected) {
         rejected = true
         rejectedFor = forReason
       }
       return this
     }
-    const promise = promiseFactory((resolve, reject) => {
-      if (resolved) {
-        resolve(resolvedWith)
+    const promise = promiseFactory((fulfill, reject) => {
+      if (fulfilled) {
+        fulfill(fulfilledWith)
       } else if (rejected) {
         reject(rejectedFor)
       } else {
-        this.resolve = (...args) => {
-          resolve(...args)
+        this.fulfill = (...args) => {
+          fulfill(...args)
           return this
         }
         this.reject = (...args) => {
@@ -55,7 +55,7 @@ export default class ExtrinsicPromise {
   /**
    * An alternative pattern where you can pass in a work function
    * after construction, which will be pushed onto the event stack
-   * to be invoked with the `resolve` and `reject` functions that will
+   * to be invoked with the `fulfill` and `reject` functions that will
    * settle this ExtrinsicPromise, just like the normal work function passed
    * to a `Promise` constructor.
    *
@@ -64,7 +64,7 @@ export default class ExtrinsicPromise {
   work (workFunction) {
     setImmediate(() => {
       try {
-        workFunction(this.resolve, this.reject)
+        workFunction(this.fulfill, this.reject)
       } catch (error) {
         this.reject(error)
       }

@@ -5,12 +5,18 @@ for those times when you just really need to settle (fulfill or reject) your pro
 _outside_ the promise's work-function.
 
 Specifically, an `ExtrinsicPromise` is a thennable that you construct _without_ a
-work-function, and instead call public `resolve` and `reject` methods on the object
+work-function, and instead call public `fulfill` and `reject` methods on the object
 to settle the state of the promise.
 
 **Note:** this is generally a promises _antipattern_. It is not recommended for most use cases,
 but there are some situations that can't reasonably be handled with traditional promises (at
 least not without re-implementing extrinsic-promises.)
+
+## Installation
+
+```console
+npm install --save extrinsic-promises
+```
 
 ## Example
 
@@ -26,8 +32,8 @@ promise.then((value) => {
   console.log('Promise was fulfilled with value:', value)
 })
 
-// Call the public methods on the promise to resolve/fulfill it.
-promise.resolve('Some value')
+// Call the public methods on the promise to fulfill/resolve it.
+promise.fulfill('Some value')
 ```
 
 Rejecting a promise:
@@ -56,7 +62,7 @@ import Promise from 'bluebird'
 import ExtrinsicPromise from 'extrinsic-promises'
 
 const exPromise = new ExtrinsicPromise()
-const bluebirdPromise = Promise.resolve(exPromise)
+const bluebirdPromise = Promise.fulfill(exPromise)
 ```
 
 Or, if the library doesn't provide a method like that, you can use the standard `Promise` constructor
@@ -66,8 +72,8 @@ as follows:
 import ExtrinsicPromise from 'extrinsic-promises'
 
 const exPromise = new ExtrinsicPromise()
-const otherPromise = new Promise((resolve, reject) => {
-  exPromise.then(resolve, reject)
+const otherPromise = new Promise((fulfill, reject) => {
+  exPromise.then(fulfill, reject)
 })
 ```
 
@@ -80,7 +86,7 @@ The `ExtrinsicPromise` class exports the following public methods:
 The standard `then` method of the [Promises/A+](https://promisesaplus.com/#the-then-method) standard,
 used to register an on-fulfill and/or on-reject handler for the promise.
 
-### `ExtrinsicPromise::resolve([withValue])`
+### `ExtrinsicPromise::fulfill([withValue])`
 
 Resolve (fulfill) the `ExtrinsicPromise` with the optional given value. Note that there is no gaurantee as to when
 fulfillment occurs (i.e., synchronously or asynchronously).
@@ -97,8 +103,8 @@ you normally would pass to the `Promise` constructor, but in this case you're pa
 has already been constructed.
 
 The given work function will be invoked _unconditionally_ (even if the promise is already settled) with
-two arguments, typically called `resolve` and `reject`. These are functions that are used to settle the state
-of the promise once the work you promise to do is done, just like the `.resolve()` and `.reject()` methods on
+two arguments, typically called `fulfill` and `reject`. These are functions that are used to settle the state
+of the promise once the work you promise to do is done, just like the `.fulfill()` and `.reject()` methods on
 the `ExtrinsicPromise`.
 
 If an error is thrown inside the workfunction, it will be treated as a rejection.
@@ -110,4 +116,4 @@ the given work function has been called.
 
 Returns a minimal _thennable_ object which only exposes the `.then()` method of this object as a bound function.
 This allows you to pass around this object as a promise, without exposing it's state-mutating methods like
-`.resolve()` and `.reject()`.
+`.fulfill()` and `.reject()`.

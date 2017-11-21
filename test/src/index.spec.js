@@ -14,45 +14,45 @@ chai.use(chaiAsPromised)
 chai.use(sinonChai)
 
 describe('extrinsic-promises', () => {
-  it('Should resolve promise when .resolve() method is called', () => {
+  it('Should fulfill promise when .fulfill() method is called', () => {
     // given
     const testFulfill = 'test-value'
     const promiseUnderTest = new ExtrinsicPromise()
 
     // when
-    promiseUnderTest.resolve(testFulfill)
+    promiseUnderTest.fulfill(testFulfill)
 
     // then
     return expect(promiseUnderTest).to.eventually.equal(testFulfill)
   })
 
-  it('should resolve even if .reject() is called after .resolve()', () => {
+  it('should fulfill even if .reject() is called after .fulfill()', () => {
     // given
     const testFulfill = 'test-value'
     const promiseUnderTest = new ExtrinsicPromise()
 
     // when
-    promiseUnderTest.resolve(testFulfill)
+    promiseUnderTest.fulfill(testFulfill)
     promiseUnderTest.reject(new Error('test-error'))
 
     // then
     return expect(promiseUnderTest).to.eventually.equal(testFulfill)
   })
 
-  it('should resolve with the initial value if .resolve() is called multiple times', () => {
+  it('should fulfill with the initial value if .fulfill() is called multiple times', () => {
     // given
     const testFulfill = 'test-value'
     const promiseUnderTest = new ExtrinsicPromise()
 
     // when
-    promiseUnderTest.resolve(testFulfill)
-    promiseUnderTest.resolve('some other value')
+    promiseUnderTest.fulfill(testFulfill)
+    promiseUnderTest.fulfill('some other value')
 
     // then
     return expect(promiseUnderTest).to.eventually.equal(testFulfill)
   })
 
-  it('Should resolve promise when .resolve() method is called later @slow', () => {
+  it('Should fulfill promise when .fulfill() method is called later @slow', () => {
     // given
     const testFulfill = 'test-value'
     const promiseUnderTest = new ExtrinsicPromise()
@@ -62,7 +62,7 @@ describe('extrinsic-promises', () => {
       setTimeout(resolve, 10)
     })
       .then(() => {
-        promiseUnderTest.resolve(testFulfill)
+        promiseUnderTest.fulfill(testFulfill)
         return null
       })
       .then(() => expect(promiseUnderTest).to.eventually.equal(testFulfill))
@@ -80,14 +80,14 @@ describe('extrinsic-promises', () => {
     return expect(promiseUnderTest).to.be.rejectedWith(testReason)
   })
 
-  it('should reject even if .reject() is called after .resolve()', () => {
+  it('should reject even if .reject() is called after .fulfill()', () => {
     // given
     const testReason = new Error('Test Reason')
     const promiseUnderTest = new ExtrinsicPromise()
 
     // when
     promiseUnderTest.reject(testReason)
-    promiseUnderTest.resolve('some value')
+    promiseUnderTest.fulfill('some value')
 
     // then
     return expect(promiseUnderTest).to.be.rejectedWith(testReason)
@@ -123,13 +123,13 @@ describe('extrinsic-promises', () => {
   })
 
   describe('when a Promise calls the work function synchronously', () => {
-    it('should resolve promise when .resolve method is called', () => {
+    it('should fulfill promise when .fulfill method is called', () => {
       // given
       const testFulfill = 'test-value'
       const promiseUnderTest = new ExtrinsicPromise(wf => new SynchronousPromise(wf))
 
       // when
-      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.fulfill(testFulfill)
 
       // then
       return expect(promiseUnderTest).to.eventually.equal(testFulfill)
@@ -156,7 +156,7 @@ describe('extrinsic-promises', () => {
       const hidden = promiseUnderTest.hide()
 
       // when
-      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.fulfill(testFulfill)
 
       // then
       return expect(hidden).to.eventually.equal(testFulfill)
@@ -181,8 +181,8 @@ describe('extrinsic-promises', () => {
       // given
       const promiseUnderTest = new ExtrinsicPromise()
       const fulfillValue = 'fulfilled-with-this'
-      const workSpy = sinon.spy((resolve) => {
-        resolve(fulfillValue)
+      const workSpy = sinon.spy((fulfill) => {
+        fulfill(fulfillValue)
       })
 
       // when
@@ -197,7 +197,7 @@ describe('extrinsic-promises', () => {
       // given
       const promiseUnderTest = new ExtrinsicPromise()
       const testReason = new Error('test-error')
-      const workSpy = sinon.spy((resolve, reject) => {
+      const workSpy = sinon.spy((fulfill, reject) => {
         reject(testReason)
       })
 
@@ -227,39 +227,39 @@ describe('extrinsic-promises', () => {
   })
 
   describe('when promise constructor calls workfunction much later @slow', () => {
-    it('should resolve promise when .resolve method is called immediately', () => {
+    it('should fulfill promise when .fulfill method is called immediately', () => {
       // given
       const testFulfill = 'test-value'
       const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
 
       // when
-      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.fulfill(testFulfill)
 
       // then
       return expect(promiseUnderTest).to.eventually.equal(testFulfill)
     })
 
-    it('should resolve even if .reject() is called after .resolve()', () => {
+    it('should fulfill even if .reject() is called after .fulfill()', () => {
       // given
       const testFulfill = 'test-value'
       const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
 
       // when
-      promiseUnderTest.resolve(testFulfill)
+      promiseUnderTest.fulfill(testFulfill)
       promiseUnderTest.reject(new Error('test-error'))
 
       // then
       return expect(promiseUnderTest).to.eventually.equal(testFulfill)
     })
 
-    it('should resolve with the initial value if .resolve() is called multiple times', () => {
+    it('should fulfill with the initial value if .fulfill() is called multiple times', () => {
       // given
       const testFulfill = 'test-value'
       const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
 
       // when
-      promiseUnderTest.resolve(testFulfill)
-      promiseUnderTest.resolve('some other value')
+      promiseUnderTest.fulfill(testFulfill)
+      promiseUnderTest.fulfill('some other value')
 
       // then
       return expect(promiseUnderTest).to.eventually.equal(testFulfill)
@@ -277,14 +277,14 @@ describe('extrinsic-promises', () => {
       return expect(promiseUnderTest).to.be.rejectedWith(testReason)
     })
 
-    it('should reject even if .reject() is called after .resolve()', () => {
+    it('should reject even if .reject() is called after .fulfill()', () => {
       // given
       const testReason = new Error('Test Reason')
       const promiseUnderTest = new ExtrinsicPromise(wf => new LaterPromise(wf))
 
       // when
       promiseUnderTest.reject(testReason)
-      promiseUnderTest.resolve('some value')
+      promiseUnderTest.fulfill('some value')
 
       // then
       return expect(promiseUnderTest).to.be.rejectedWith(testReason)
@@ -304,8 +304,8 @@ describe('extrinsic-promises', () => {
     })
   })
 
-  describe('when a custom promise constructor is provided that swaps resolve and reject', () => {
-    it('should reject when the .resolve() method is called', () => {
+  describe('when a custom promise constructor is provided that swaps fulfill and reject', () => {
+    it('should reject when the .fulfill() method is called', () => {
       // given
       const promiseUnderTest = new ExtrinsicPromise(wf => {
         return new Promise(wf)
@@ -318,7 +318,7 @@ describe('extrinsic-promises', () => {
       })
 
       // when
-      promiseUnderTest.resolve()
+      promiseUnderTest.fulfill()
 
       // then
       return expect(promiseUnderTest).to.be.rejectedWith('test-error')
@@ -332,7 +332,7 @@ class SynchronousPromise {
     this.onFulfill = []
     this.onReject = []
 
-    const resolve = (withValue) => {
+    const fulfill = (withValue) => {
       this.state = 'fulfilled'
       this.fulfilledWith = withValue
       this.onFulfill.forEach(h => this.handle(h, withValue))
@@ -344,20 +344,20 @@ class SynchronousPromise {
       this.onReject.forEach(h => this.handle(h, because))
     }
 
-    this._callWorkFunction(workfunction, resolve, reject)
+    this._callWorkFunction(workfunction, fulfill, reject)
   }
 
-  _callWorkFunction (workfunction, resolve, reject) {
+  _callWorkFunction (workfunction, fulfill, reject) {
     try {
-      workfunction(resolve, reject)
+      workfunction(fulfill, reject)
     } catch (error) {
       reject(error)
     }
   }
 
-  handle ({handler, resolve, reject}, value) {
+  handle ({handler, fulfill, reject}, value) {
     try {
-      resolve(handler(value))
+      fulfill(handler(value))
     } catch (error) {
       reject(error)
     }
@@ -365,27 +365,27 @@ class SynchronousPromise {
 
   then (onFulfill, onReject) {
     if (this.state === 'pending') {
-      return new SynchronousPromise((resolve, reject) => {
-        this.onFulfill.push({handler: onFulfill, resolve, reject})
-        this.onReject.push({handler: onReject, resolve, reject})
+      return new SynchronousPromise((fulfill, reject) => {
+        this.onFulfill.push({handler: onFulfill, fulfill, reject})
+        this.onReject.push({handler: onReject, fulfill, reject})
       })
     } else if (this.state === 'fulfilled') {
-      return new SynchronousPromise((resolve, reject) => {
-        this.handle({handler: onFulfill, resolve, reject}, this.fulfilledWith)
+      return new SynchronousPromise((fulfill, reject) => {
+        this.handle({handler: onFulfill, fulfill, reject}, this.fulfilledWith)
       })
     } else if (this.state === 'rejected') {
-      return new SynchronousPromise((resolve, reject) => {
-        this.handle({handler: onReject, resolve, reject}, this.rejectedWith)
+      return new SynchronousPromise((fulfill, reject) => {
+        this.handle({handler: onReject, fulfill, reject}, this.rejectedWith)
       })
     }
   }
 }
 
 class LaterPromise extends SynchronousPromise {
-  _callWorkFunction (workfunction, resolve, reject) {
+  _callWorkFunction (workfunction, fulfill, reject) {
     setTimeout(() => {
       try {
-        workfunction(resolve, reject)
+        workfunction(fulfill, reject)
       } catch (error) {
         reject(error)
       }
