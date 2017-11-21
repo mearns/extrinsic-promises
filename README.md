@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/mearns/extrinsic-promises.svg?branch=master)](https://travis-ci.org/mearns/extrinsic-promises)
+[![JavaScript Standard Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 # extrinsic-promises
 
 `extrinsic-promises` is a JavaScript module that provides a convenient promises anti-pattern
@@ -117,3 +120,18 @@ the given work function has been called.
 Returns a minimal _thennable_ object which only exposes the `.then()` method of this object as a bound function.
 This allows you to pass around this object as a promise, without exposing it's state-mutating methods like
 `.fulfill()` and `.reject()`.
+
+## How Does it Work?
+
+It's pretty simple, feel free to read the code. There's a few details necessary to avoid race conditions, but
+the gist of it is to simply save the `fulfill` and `reject` signalling functions that the promise passes in
+to the work function:
+
+```javascript
+constructor () {
+  new Promise((fulfill, reject) => {
+    this.fulfill = fulfill
+    this.reject = reject
+  })
+}
+```
