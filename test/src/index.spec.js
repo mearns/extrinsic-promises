@@ -26,6 +26,19 @@ describe('extrinsic-promises', () => {
     return expect(promiseUnderTest).to.eventually.equal(testFulfill)
   })
 
+  it('should have fulfill as a bound method', () => {
+    // given
+    const testFulfill = 'test-value'
+    const promiseUnderTest = new ExtrinsicPromise()
+    const fulfill = promiseUnderTest.fulfill
+
+    // when
+    fulfill(testFulfill)
+
+    // then
+    return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+  })
+
   it('should fulfill even if .reject() is called after .fulfill()', () => {
     // given
     const testFulfill = 'test-value'
@@ -75,6 +88,19 @@ describe('extrinsic-promises', () => {
 
     // when
     promiseUnderTest.reject(testReason)
+
+    // then
+    return expect(promiseUnderTest).to.be.rejectedWith(testReason)
+  })
+
+  it('should have reject as a bound method', () => {
+    // given
+    const testReason = new Error('Test Reason')
+    const promiseUnderTest = new ExtrinsicPromise()
+    const reject = promiseUnderTest.reject
+
+    // when
+    reject(testReason)
 
     // then
     return expect(promiseUnderTest).to.be.rejectedWith(testReason)
