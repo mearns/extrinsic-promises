@@ -94,10 +94,28 @@ used to register an on-fulfill and/or on-reject handler for the promise.
 Resolve (fulfill) the `ExtrinsicPromise` with the optional given value. Note that there is no gaurantee as to when
 fulfillment occurs (i.e., synchronously or asynchronously).
 
+This method is already bound and can be used correctly as a function reference. E.g.,:
+
+```javascript
+const exPromise = new ExtrinsicPromise()
+const fulfillLater = exPromise.fulfill
+// ...
+fulfillLater(value)  // correctly fulfills exPromise.
+```
+
 ### `ExtrinsicPromise::reject([forReason])`
 
 Reject the `ExtrinsicPromise` with the optional given reason (typically, an Error object). Note that there is
 no gaurantee as to when rejection occurs (i.e., synchronously or asynchronously).
+
+This method is already bound and can be used correctly as a function reference. E.g.,:
+
+```javascript
+const exPromise = new ExtrinsicPromise()
+const rejectLater = exPromise.reject
+// ...
+rejectLater(reason)  // correctly rejects exPromise.
+```
 
 ### `ExtrinsicPromise::work(workfunction)`
 
