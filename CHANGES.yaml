@@ -15,7 +15,7 @@ Releases:
         commits: [9fb1eeb]
       - type: semantic
         description: Add CHANGES.yaml
-        commits: []
+        commits: [005027f]
   - release: 1
     version: 1.0.0
     date: 2017-11-20
