@@ -15,6 +15,7 @@
     "check:lint:ci:travis-lint": "travis-lint .travis.yml",
     "check:lint:ci:yaml": "yamllint .travis.yml",
     "check:lint:ci": "npm-run-all --parallel check:lint:ci:*",
+    "check:lint:changes": "yamllint CHANGES.yaml",
     "check:lint:readme:markdown": "remark --no-stdout README.md",
     "check:lint:readme": "npm-run-all --parallel check:lint:readme:*",
     "check:lint:js:root": "standard ./*.js | snazzy",

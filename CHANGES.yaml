@@ -1,0 +1,21 @@
+Releases:
+  - release: 2
+    version: 1.1.0
+    date: 2018-04-12
+    description: Add an `adopt(thennable)` method to settle an `ExtrinsicPromise` based on the settled state of another thennable.
+    changes:
+      - type: minor
+        description: Add `ExtrinsicPromise::adopt()` method
+        commits: [749a6ff]
+      - type: semantic
+        description: Add unit tests to ensure that the `fulfill()` and `reject()` methods are bound
+        commits: [ead0460]
+      - type: semantic
+        description: Document in README that fulfill and reject methods are bound.
+        commits: [9fb1eeb]
+      - type: semantic
+        description: Add CHANGES.yaml
+        commits: []
+  - release: 1
+    version: 1.0.0
+    date: 2017-11-20
