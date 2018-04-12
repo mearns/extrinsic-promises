@@ -117,6 +117,17 @@ const rejectLater = exPromise.reject
 rejectLater(reason)  // correctly rejects exPromise.
 ```
 
+### `ExtrinsicPromise::adopt(thennable)`
+
+Adopt the state of the given thennable, once the thennable settles, if this extrinsic promise has not _already_
+settled. This is a convenience for using this extrinsic promise's `fulfill` and `reject` methods as the on-fulfill
+and on-reject handlers, respectively, of the given thennable, as follows:
+
+```javascript
+const exPromise = new ExtrinsicPromise()
+thennable.then(exPromise.fulfill, exPromise.reject)
+```
+
 ### `ExtrinsicPromise::work(workfunction)`
 
 An alternative interface for settling the promise, this allows you to pass in a work-function just like

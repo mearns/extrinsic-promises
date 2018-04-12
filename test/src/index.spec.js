@@ -106,7 +106,7 @@ describe('extrinsic-promises', () => {
     return expect(promiseUnderTest).to.be.rejectedWith(testReason)
   })
 
-  it('should reject even if .reject() is called after .fulfill()', () => {
+  it('should reject even if .fulfill() is called after .reject()', () => {
     // given
     const testReason = new Error('Test Reason')
     const promiseUnderTest = new ExtrinsicPromise()
@@ -199,6 +199,65 @@ describe('extrinsic-promises', () => {
 
       // then
       return expect(hidden).to.be.rejectedWith(testReason)
+    })
+  })
+
+  describe('adopt() method', () => {
+    it('should fulfill with the same value when the adopted promise fulfills', () => {
+      // given
+      const testFulfill = 'test-value'
+      const promiseUnderTest = new ExtrinsicPromise()
+      const adoptedPromise = Promise.resolve(testFulfill)
+
+      // when
+      promiseUnderTest.adopt(adoptedPromise)
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should remain fulfilled with the same value if it was already fulfilled when the adopted promise is adopted', () => {
+      // given
+      const testFulfill = 'test-value'
+      const anotherFulfill = 'another-value'
+      const promiseUnderTest = new ExtrinsicPromise()
+      const adoptedPromise = Promise.resolve(anotherFulfill)
+
+      // when
+      promiseUnderTest.fulfill(testFulfill)
+      promiseUnderTest.adopt(adoptedPromise)
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should remain fulfilled with the same value if it was fulfilled after a promise is adopted but before it fulfills', () => {
+      // given
+      const testFulfill = 'test-value'
+      const anotherFulfill = 'another-value'
+      const promiseUnderTest = new ExtrinsicPromise()
+      const adoptedPromise = new ExtrinsicPromise()
+
+      // when
+      promiseUnderTest.adopt(adoptedPromise)
+      promiseUnderTest.fulfill(testFulfill)
+      adoptedPromise.fulfill(anotherFulfill)
+
+      // then
+      return expect(promiseUnderTest).to.eventually.equal(testFulfill)
+    })
+
+    it('should reject with the same reason when the adopted promise rejects', () => {
+      // given
+      const testReason = new Error('Test Reason')
+      const promiseUnderTest = new ExtrinsicPromise()
+      const adoptedPromise = Promise.reject(testReason)
+
+      // when
+      promiseUnderTest.adopt(adoptedPromise)
+
+      // then
+      return expect(promiseUnderTest).to.be.rejectedWith(testReason)
     })
   })
 

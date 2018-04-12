@@ -73,6 +73,21 @@ export default class ExtrinsicPromise {
   }
 
   /**
+   * Have this extrinsic promise adopt the state of the specified thennable. If the given thennable
+   * fulfills, this extrinsic promise will fulfill with the same value. If the given thennable rejects,
+   * this extrinsic promise will reject for the same reason. While the given thennable is unsettled,
+   * this extrinsic promise will remain unsettled.
+   *
+   * If this extrinsic promise is already settled, it will not change.
+   *
+   * Return back this same object for convenience.
+   */
+  adopt (promise) {
+    promise.then(this.fulfill, this.reject)
+    return this
+  }
+
+  /**
    * Returns a thennable which is bound to this extrinsic promise through
    * the closure, but only exposes a `then` method, thereby hiding all other
    * methods of the this extrnisic promise (i.e., preventing code which only
