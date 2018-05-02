@@ -1,8 +1,22 @@
 Releases:
+  - release: 3
+    version: 1.2.0
+    date: 2018-05-02
+    description: >-
+      Actually add in the `adopt(thennable)` method, which was added to src but inadvertently not build and published in the previous release.
+    changes:
+      - type: minor
+        description: Add `ExtrinsicPromise::adopt()` method
+        commits: [749a6ff]
   - release: 2
     version: 1.1.0
     date: 2018-04-12
-    description: Add an `adopt(thennable)` method to settle an `ExtrinsicPromise` based on the settled state of another thennable.
+    description: >-
+      Add an `adopt(thennable)` method to settle an `ExtrinsicPromise` based on the settled state of another thennable.
+    deprecated: >-
+      This version was not published correctly. Although the `adopt` method was added to the source code, the code was not actually
+      rebuilt correctly before beind published, so the published package does _not_ contain the new method. The new `adopt` method
+      was first correctly published in release 3 (v1.2.0).
     changes:
       - type: minor
         description: Add `ExtrinsicPromise::adopt()` method
