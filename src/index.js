@@ -33,25 +33,28 @@ export default class ExtrinsicPromise {
       }
       return this
     }
-    const promise = promiseFactory(fulfill => {
+    const promise = Promise.resolve(promiseFactory((fulfill, reject) => {
       if (fulfilled) {
-        fulfill({fulfilled: true, value: fulfilledWith})
+        fulfill(fulfilledWith)
       } else if (rejected) {
-        fulfill({fulfilled: false, value: rejectedFor})
+        reject(rejectedFor)
       } else {
-        this.fulfill = (withValue) => {
-          fulfill({fulfilled: true, value: withValue})
+        this.fulfill = (...args) => {
+          fulfill(...args)
           return this
         }
-        this.reject = (forReason) => {
-          fulfill({fulfilled: false, value: forReason})
+        this.reject = (...args) => {
+          reject(...args)
           return this
         }
       }
-    })
-    this.then = (onFulfill, onReject) => promise.then(({fulfilled, value}) => {
-      return (fulfilled ? onFulfill : onReject)(value)
-    })
+    }))
+      .then(
+        value => ({fulfilled: true, value}),
+        reason => ({fulfilled: false, value: reason})
+      )
+    this.then = (onFulfill, onReject) => promise.then(({fulfilled, value}) =>
+      (fulfilled ? onFulfill : onReject)(value))
   }
 
   /**
