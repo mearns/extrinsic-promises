@@ -1,4 +1,29 @@
 Releases:
+  - release: 5
+    version: 1.3.1
+    date: 2018-10-10
+    description: >-
+      'Fix bug #4, unhandled rejection warning/error with adopt()'
+    changes:
+      - type: patch
+        description: Fix the unhandled rejection warning with adopt()
+        commits: [f3a9fb3d015ef9f22e3875ebe4cce08c6f56dcfd]
+        issuesAddressed:
+          - id: '#4'
+            link: https://github.com/mearns/extrinsic-promises/issues/4
+      - type: patch
+        description: Address all but one npm audit issues (contemporaneously) (updates to nyc, mocha, stryker)
+        commits:
+          - e5aa004a297490a293d565585a44d5d2ed6a95c4
+          - 67f6cfdb4b97167bddc3b60c2ac1e613cebe7a06
+          - 8f16dff9a76a35637100248a6c20aeba595dc0ff
+          - 53a3e238054bc84ec60dee15f405585da96fa952
+      - type: patch
+        description: Add package-lock file.
+        commits: [72ca3363c355c9f05deebe274963539a940f9425]
+      - type: patch
+        description: Add node v9 and v10 to supported engines
+        commits: [96c766a239dfe7dc5af6472d17759f033b7fcd2e]
   - release: 4
     version: 1.3.0
     date: 2018-10-10
