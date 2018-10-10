@@ -38,10 +38,6 @@ matrix:
         env:  NODE_ENVIRONMENT=production  BUILD_STEPS='compile test'
       - node_js: 6
         env:  NODE_ENVIRONMENT=development BUILD_STEPS='compile'
-      - node_js: 5
-        env:  NODE_ENVIRONMENT=production  BUILD_STEPS='compile test'
-      - node_js: 5
-        env:  NODE_ENVIRONMENT=development BUILD_STEPS='compile'
 
 cache:
   directories:
