@@ -1,4 +1,16 @@
 Releases:
+  - release: 6
+    version: 2.0.0
+    date: 2018-10-10
+    description: >-
+      'No longer supporting node v5, addressing bug #5 as won't fix'
+    changes:
+      - type: major
+        description: Remove support for node v5.
+        commits: [5a17ebc0a3ca5ea58fe7f59c9c70f9ead8818b86, 60e07fd082bed0df884816da96bc4b6216b9f5f5]
+        issuesAddressed:
+          - id: '#5'
+            link: https://github.com/mearns/extrinsic-promises/issues/5
   - release: 5
     version: 1.3.1
     date: 2018-10-10
