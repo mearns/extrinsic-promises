@@ -107,9 +107,9 @@
     "standard": "10.0.3",
     "stryker": "0.12.0",
     "stryker-api": "0.10.0",
-    "stryker-html-reporter": "0.10.0",
-    "stryker-mocha-framework": "0.6.0",
-    "stryker-mocha-runner": "0.9.0",
+    "stryker-html-reporter": "0.16.4",
+    "stryker-mocha-framework": "0.12.3",
+    "stryker-mocha-runner": "0.14.3",
     "travis-lint": "1.0.0",
     "yaml-lint": "1.0.0"
   },
