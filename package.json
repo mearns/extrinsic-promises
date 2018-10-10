@@ -52,15 +52,6 @@
     "node": ">5.0.0 <9"
   },
   "license": "MIT",
-  "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [
-      "transform-object-assign",
-      "transform-object-rest-spread"
-    ]
-  },
   "nyc": {
     "reporter": [
       "text",
@@ -105,9 +96,12 @@
     "snazzy": "7.0.0",
     "source-map-support": "0.5.9",
     "standard": "10.0.3",
-    "stryker": "0.12.0",
-    "stryker-api": "0.10.0",
+    "stryker": "0.29.5",
+    "stryker-api": "0.21.2",
+    "stryker-babel-transpiler": "0.7.4",
+    "stryker-baseline-reporter": "1.0.3",
     "stryker-html-reporter": "0.16.4",
+    "stryker-javascript-mutator": "0.11.0",
     "stryker-mocha-framework": "0.12.3",
     "stryker-mocha-runner": "0.14.3",
     "travis-lint": "1.0.0",

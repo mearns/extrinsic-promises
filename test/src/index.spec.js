@@ -15,7 +15,7 @@ chai.use(sinonChai)
 
 describe('extrinsic-promises', () => {
   it('should be requirable as an unamed import', () => {
-    const ImportedClass = require('../..')
+    const ImportedClass = require('../../src')
     const inst = new ImportedClass()
     expect(ImportedClass).to.be.an.instanceof(Function)
     expect(ImportedClass.name).to.be.equal('ExtrinsicPromise')
@@ -23,7 +23,7 @@ describe('extrinsic-promises', () => {
   })
 
   it('should be requirable as "default" on the module (legacy interface)', () => {
-    const ImportedClass = require('../..').default
+    const ImportedClass = require('../../src').default
     const inst = new ImportedClass()
     expect(ImportedClass).to.be.an.instanceof(Function)
     expect(ImportedClass.name).to.be.equal('ExtrinsicPromise')

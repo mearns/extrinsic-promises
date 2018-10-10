@@ -1,18 +1,13 @@
 module.exports = function (config) {
   config.set({
-    files: [
-      {
-        pattern: 'dist/src/**/*.js',
-        mutated: true,
-        included: false
-      },
-      'dist/test/**/*.js'
-    ],
+    mutator: 'javascript',
+    packageManager: 'npm',
+    reporters: ['html', 'baseline', 'clear-text', 'progress', 'dashboard'],
     testRunner: 'mocha',
-    mutator: 'es5',
-    transpilers: [],
-    reporter: ['html', 'clear-text', 'progress'],
+    transpilers: ['babel'],
     testFramework: 'mocha',
-    coverageAnalysis: 'perTest'
+    coverageAnalysis: 'off',
+    mutate: ['src/**/*.js'],
+    babelrcFile: '.babelrc'
   })
 }
