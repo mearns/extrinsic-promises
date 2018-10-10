@@ -3,7 +3,9 @@ Releases:
     version: 2.0.0
     date: 2018-10-10
     description: >-
-      'No longer supporting node v5, addressing bug #5 as won't fix'
+      'No longer supporting node v5, addressing bug #5 as wont fix'
+      Note that there is no change to the actual interface, the only compatibility change is dropping support for node v5,
+      which even there is only for build/development (i.e., you can still run this on node 5, you just cannot build)
     changes:
       - type: major
         description: Remove support for node v5.
