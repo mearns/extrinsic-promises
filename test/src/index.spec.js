@@ -14,6 +14,22 @@ chai.use(chaiAsPromised)
 chai.use(sinonChai)
 
 describe('extrinsic-promises', () => {
+  it('should be requirable as an unamed import', () => {
+    const ImportedClass = require('../..')
+    const inst = new ImportedClass()
+    expect(ImportedClass).to.be.an.instanceof(Function)
+    expect(ImportedClass.name).to.be.equal('ExtrinsicPromise')
+    expect(inst).to.have.property('constructor').which.has.property('name').which.equals('ExtrinsicPromise')
+  })
+
+  it('should be requirable as "default" on the module (legacy interface)', () => {
+    const ImportedClass = require('../..').default
+    const inst = new ImportedClass()
+    expect(ImportedClass).to.be.an.instanceof(Function)
+    expect(ImportedClass.name).to.be.equal('ExtrinsicPromise')
+    expect(inst).to.have.property('constructor').which.has.property('name').which.equals('ExtrinsicPromise')
+  })
+
   it('Should fulfill promise when .fulfill() method is called', () => {
     // given
     const testFulfill = 'test-value'

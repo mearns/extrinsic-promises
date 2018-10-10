@@ -37,7 +37,7 @@
     "compile-prod": "npm-run-all compile-prod:* compile:*",
     "compile-dev": "npm-run-all compile-dev:* compile:*",
     "compile": "if-env NODE_ENV=production && npm run compile-prod || npm run compile-dev",
-    "build": "npm-run-all clean verify compile"
+    "build": "npm-run-all clean compile verify"
   },
   "author": "Brian Mearns",
   "homepage": "https://github.com/mearns/extrinsic-promises",
