@@ -4,5 +4,3 @@ dist/
 coverage/
 .nyc_output/
 reports/
-package-lock.json
-npm-shrinkwrap.json
