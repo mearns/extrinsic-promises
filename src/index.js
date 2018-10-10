@@ -88,7 +88,7 @@ class ExtrinsicPromise {
    * Return back this same object for convenience.
    */
   adopt (promise) {
-    promise.then(this.fulfill, this.reject)
+    promise.then(this.fulfill, this.reject).then(() => {}, () => {})
     return this
   }
 
