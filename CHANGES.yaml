@@ -1,4 +1,22 @@
 Releases:
+  - release: 4
+    version: 1.3.0
+    date: 2018-10-10
+    description: >-
+      'Fix bug #2 with missing dependency, and add better support for `require`-ing this package by providing an unnamed'
+    changes:
+      - type: minor
+        description: Fix the missing 'source-map-support' dependency.
+        commits: [72eebd6361eafeef05ebf1761c6046ad29813944]
+        issuesAddressed:
+          - id: '#2'
+            link: https://github.com/mearns/extrinsic-promises/issues/2
+      - type: minor
+        description: Add better support for `require`-ing the package.
+        commits: [6d40ffe0c01b339195c1cb8e27c189a1fc756383]
+        issuesAddressed:
+          - id: '#3'
+            link: https://github.com/mearns/extrinsic-promises/issues/3
   - release: 3
     version: 1.2.0
     date: 2018-05-02
