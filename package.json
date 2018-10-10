@@ -49,7 +49,7 @@
     "url": "https://github.com/mearns/extrinsic-promises.git"
   },
   "engines": {
-    "node": ">5.0.0 <9"
+    "node": ">5.0.0 <11"
   },
   "license": "MIT",
   "nyc": {
