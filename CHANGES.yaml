@@ -1,4 +1,9 @@
 Releases:
+  - release: 8
+    changes:
+      - type: patch
+        description: Update to latest versions of stryker packages in dev dependencies.
+        commits: [54a3928bdea0c2f69f9bbd9adc815b99c947af67]
   - release: 7
     version: 2.1.0
     date: 2018-12-12
