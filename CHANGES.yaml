@@ -1,11 +1,18 @@
 Releases:
   - release: 7
-    version: 2.0.1
+    version: 2.1.0
     date: 2018-12-12
     description: >-
       Important security patch to remove a malware package included as a transitive dependency.
-      Patch a few other dependencies to the latest versions.
+      Patch a few other dependencies to the latest versions. Also removes source maps support
+      from the published code so that it can run more easily in browsers.
     changes:
+      - type: minor
+        description: Support execution in browsers by removing source map support from published code.
+        commits: [8ccdceafcfdc55f02fd61d49f53b7ebe0e0ab73f]
+        issuesAddressed:
+          - id: '#8'
+            link: https://github.com/mearns/extrinsic-promises/issues/8
       - type: patch
         description: Update to latest sinon version
         commits: [0d704bd609ee9c9f5306c0a86ee2fa16b347b78f]
@@ -16,7 +23,7 @@ Releases:
           - link: https://www.npmjs.com/advisories/737
             summary: flatmap-stream v0.1.1 includes a bitcoin-stealing malware
         deprecates:
-          - version: '<2.0.1'
+          - version: '<2.1.0'
             explanation: Prior versions include a malware package as a transitive dev-dependency in flatmap-stream v0.1.1.
   - release: 6
     version: 2.0.0
