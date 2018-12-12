@@ -9,6 +9,9 @@
     "reactive",
     "callback"
   ],
+  "files": [
+    "dist/src/index.js"
+  ],
   "main": "dist/src/index.js",
   "scripts": {
     "clean": "rimraf coverage/ .nyc_output/ dist/",
