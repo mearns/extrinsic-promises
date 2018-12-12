@@ -1,4 +1,10 @@
 Releases:
+  - release: 7
+    date: 2018-12-12
+    changes:
+      - type: patch
+        description: Update to latest sinon version
+        commits: [0d704bd609ee9c9f5306c0a86ee2fa16b347b78f]
   - release: 6
     version: 2.0.0
     date: 2018-10-10
