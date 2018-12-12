@@ -25,12 +25,15 @@ Releases:
       - type: patch
         description: Update to latest versions of sinon, chai, and sinon-chai dev dependencies.
         commits: [0d704bd609ee9c9f5306c0a86ee2fa16b347b78f, d35c4265e17bf4d5b486aa919e7658055129c70c]
+      - type: patch
+        description: Reduce package size by being explicit about what files need to be included in the package with the "files" property in package.json
+        commits: [e5b9f834a13d06f19628d54e0f4c26eeb5a89a1d]
       - type: minor
         description: >-
           Ensure we're targeting node v6 for transpilation so it actually works in that version. This
           is probably a no-op because it should have already worked back to that version, based on CI testing.
           But this will ensure it does for good measure.
-        commits: [cfeb4466da2e5dc0c606bdcd29dd7078d1ee0c22]
+        commits: [cfeb4466da2e5dc0c606bdcd29dd7078d1ee0c22, c319667585e4f48746c58d7eafe507d82b667ced]
   - release: 6
     version: 2.0.0
     date: 2018-10-10
