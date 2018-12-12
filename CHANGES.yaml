@@ -1,10 +1,23 @@
 Releases:
   - release: 7
+    version: 2.0.1
     date: 2018-12-12
+    description: >-
+      Important security patch to remove a malware package included as a transitive dependency.
+      Patch a few other dependencies to the latest versions.
     changes:
       - type: patch
         description: Update to latest sinon version
         commits: [0d704bd609ee9c9f5306c0a86ee2fa16b347b78f]
+      - type: patch
+        description: Remove compromised version of event-stream dev dependency
+        commits: [4bef505d7d36593f28c961d760c7a1e462bed94d]
+        securityIssuesAddressed:
+          - link: https://www.npmjs.com/advisories/737
+            summary: flatmap-stream v0.1.1 includes a bitcoin-stealing malware
+        deprecates:
+          - version: '<2.0.1'
+            explanation: Prior versions include a malware package as a transitive dev-dependency in flatmap-stream v0.1.1.
   - release: 6
     version: 2.0.0
     date: 2018-10-10
