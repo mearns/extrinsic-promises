@@ -15,7 +15,6 @@
   "main": "dist/src/index.js",
   "scripts": {
     "clean": "rimraf coverage/ .nyc_output/ dist/",
-    "check:lint:ci:travis-lint": "travis-lint .travis.yml",
     "check:lint:ci:yaml": "yamllint .travis.yml",
     "check:lint:ci": "npm-run-all --parallel check:lint:ci:*",
     "check:lint:changes": "yamllint CHANGES.yaml",
@@ -107,7 +106,6 @@
     "stryker-javascript-mutator": "0.12.2",
     "stryker-mocha-framework": "0.13.3",
     "stryker-mocha-runner": "0.15.3",
-    "travis-lint": "1.0.0",
     "yaml-lint": "1.0.0"
   }
 }
