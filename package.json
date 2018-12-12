@@ -37,7 +37,8 @@
     "compile-prod": "npm-run-all compile-prod:* compile:*",
     "compile-dev": "npm-run-all compile-dev:* compile:*",
     "compile": "if-env NODE_ENV=production && npm run compile-prod || npm run compile-dev",
-    "build": "npm-run-all clean compile verify"
+    "build": "npm-run-all clean compile verify",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "author": "Brian Mearns",
   "homepage": "https://github.com/mearns/extrinsic-promises",
@@ -82,6 +83,7 @@
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "copyfiles": "1.2.0",
+    "cross-env": "5.2.0",
     "if-env": "1.0.0",
     "lfsr": "0.0.3",
     "mocha": "5.2.0",
