@@ -1,14 +1,15 @@
+PreRelease:
+  changes:
+    - type: patch
+      description: Update to latest versions of stryker packages in dev dependencies.
+      commits: [54a3928bdea0c2f69f9bbd9adc815b99c947af67]
+    - type: patch
+      description: Remove stale travis-lint dev dependency to remove some npm audit issues.
+      commits: [c6c331939693782c37c18d05555a963fa96dea6c]
+    - type: minor
+      description: Add support for node engine version 11
+      commits: [c9eb047908e8d42639840e1484ebc7c88b25782c]
 Releases:
-  - changes:
-      - type: patch
-        description: Update to latest versions of stryker packages in dev dependencies.
-        commits: [54a3928bdea0c2f69f9bbd9adc815b99c947af67]
-      - type: patch
-        description: Remove stale travis-lint dev dependency to remove some npm audit issues.
-        commits: [c6c331939693782c37c18d05555a963fa96dea6c]
-      - type: minor
-        description: Add support for node engine version 11
-        commits: [c9eb047908e8d42639840e1484ebc7c88b25782c]
   - release: 7
     version: 2.1.0
     date: 2018-12-12
