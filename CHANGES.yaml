@@ -1,15 +1,23 @@
 PreRelease:
-  changes:
-    - type: patch
-      description: Update to latest versions of stryker packages in dev dependencies.
-      commits: [54a3928bdea0c2f69f9bbd9adc815b99c947af67]
-    - type: patch
-      description: Remove stale travis-lint dev dependency to remove some npm audit issues.
-      commits: [c6c331939693782c37c18d05555a963fa96dea6c]
-    - type: minor
-      description: Add support for node engine version 11
-      commits: [c9eb047908e8d42639840e1484ebc7c88b25782c]
 Releases:
+  - release: 8
+    version: 2.2.0
+    date: 2019-10-07
+    description: >-
+      Mostly npm audit fixes. Thanks to GitHub user tamtamchik (Yuri Tkachenko) for the contribution!
+    changes:
+      - type: patch
+        description: Update to latest versions of stryker packages in dev dependencies.
+        commits: [54a3928bdea0c2f69f9bbd9adc815b99c947af67]
+      - type: patch
+        description: Remove stale travis-lint dev dependency to remove some npm audit issues.
+        commits: [c6c331939693782c37c18d05555a963fa96dea6c]
+      - type: patch
+        descriptin: Various npm audit fixes
+        commits: [59f2d85ffac5b1afcb74e28264e53fa202e86fb9]
+      - type: minor
+        description: Add support for node engine version 11
+        commits: [c9eb047908e8d42639840e1484ebc7c88b25782c]
   - release: 7
     version: 2.1.0
     date: 2018-12-12
@@ -25,17 +33,25 @@ Releases:
           - link: https://www.npmjs.com/advisories/737
             summary: flatmap-stream v0.1.1 includes a bitcoin-stealing malware
         deprecates:
-          - version: '<2.1.0'
+          - version: "<2.1.0"
             explanation: Prior versions include a malware package as a transitive dev-dependency in flatmap-stream v0.1.1.
       - type: minor
         description: Support execution in browsers by removing source map support from published code.
-        commits: [8ccdceafcfdc55f02fd61d49f53b7ebe0e0ab73f, be66f1c5ba70160652e19117c680f3bf7a9345c5]
+        commits:
+          [
+            8ccdceafcfdc55f02fd61d49f53b7ebe0e0ab73f,
+            be66f1c5ba70160652e19117c680f3bf7a9345c5,
+          ]
         issuesAddressed:
-          - id: '#8'
+          - id: "#8"
             link: https://github.com/mearns/extrinsic-promises/issues/8
       - type: patch
         description: Update to latest versions of sinon, chai, and sinon-chai dev dependencies.
-        commits: [0d704bd609ee9c9f5306c0a86ee2fa16b347b78f, d35c4265e17bf4d5b486aa919e7658055129c70c]
+        commits:
+          [
+            0d704bd609ee9c9f5306c0a86ee2fa16b347b78f,
+            d35c4265e17bf4d5b486aa919e7658055129c70c,
+          ]
       - type: patch
         description: Reduce package size by being explicit about what files need to be included in the package with the "files" property in package.json
         commits: [e5b9f834a13d06f19628d54e0f4c26eeb5a89a1d]
@@ -44,7 +60,11 @@ Releases:
           Ensure we're targeting node v6 for transpilation so it actually works in that version. This
           is probably a no-op because it should have already worked back to that version, based on CI testing.
           But this will ensure it does for good measure.
-        commits: [cfeb4466da2e5dc0c606bdcd29dd7078d1ee0c22, c319667585e4f48746c58d7eafe507d82b667ced]
+        commits:
+          [
+            cfeb4466da2e5dc0c606bdcd29dd7078d1ee0c22,
+            c319667585e4f48746c58d7eafe507d82b667ced,
+          ]
   - release: 6
     version: 2.0.0
     date: 2018-10-10
@@ -55,9 +75,13 @@ Releases:
     changes:
       - type: major
         description: Remove support for node v5.
-        commits: [5a17ebc0a3ca5ea58fe7f59c9c70f9ead8818b86, 60e07fd082bed0df884816da96bc4b6216b9f5f5]
+        commits:
+          [
+            5a17ebc0a3ca5ea58fe7f59c9c70f9ead8818b86,
+            60e07fd082bed0df884816da96bc4b6216b9f5f5,
+          ]
         issuesAddressed:
-          - id: '#5'
+          - id: "#5"
             link: https://github.com/mearns/extrinsic-promises/issues/5
   - release: 5
     version: 1.3.1
@@ -69,7 +93,7 @@ Releases:
         description: Fix the unhandled rejection warning with adopt()
         commits: [f3a9fb3d015ef9f22e3875ebe4cce08c6f56dcfd]
         issuesAddressed:
-          - id: '#4'
+          - id: "#4"
             link: https://github.com/mearns/extrinsic-promises/issues/4
       - type: patch
         description: Address all but one npm audit issues (contemporaneously) (updates to nyc, mocha, stryker)
@@ -94,13 +118,13 @@ Releases:
         description: Fix the missing 'source-map-support' dependency.
         commits: [72eebd6361eafeef05ebf1761c6046ad29813944]
         issuesAddressed:
-          - id: '#2'
+          - id: "#2"
             link: https://github.com/mearns/extrinsic-promises/issues/2
       - type: minor
         description: Add better support for `require`-ing the package.
         commits: [6d40ffe0c01b339195c1cb8e27c189a1fc756383]
         issuesAddressed:
-          - id: '#3'
+          - id: "#3"
             link: https://github.com/mearns/extrinsic-promises/issues/3
   - release: 3
     version: 1.2.0
