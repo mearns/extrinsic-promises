@@ -1,4 +1,5 @@
 PreRelease:
+  changes: []
 Releases:
   - release: 8
     version: 2.2.0
