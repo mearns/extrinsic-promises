@@ -1,6 +1,6 @@
 {
   "name": "extrinsic-promises",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "A convenient promises anti-pattern: promises you can settle from outside the promise.",
   "keywords": [
     "promise",
@@ -52,7 +52,7 @@
     "url": "https://github.com/mearns/extrinsic-promises.git"
   },
   "engines": {
-    "node": ">6.0.0 <12"
+    "node": ">6.0.0 <13"
   },
   "license": "MIT",
   "nyc": {
