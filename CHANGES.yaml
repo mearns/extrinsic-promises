@@ -6,6 +6,9 @@ Releases:
     date: 2020-05-12
     description: >-
       Just some dev depenency audit issues and update supported node engines to include node 12.
+      One note is that this no longer *builds* on node 6 as the latest mocha packages use the `async`
+      keyword which is not understood by node 6. Still runs on node 6, but you can't run the tests
+      on it.
     changes:
       - type: minor
         description: Update supported engines to include node v12.
