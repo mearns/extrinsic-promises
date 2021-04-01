@@ -3,6 +3,8 @@
 
 # extrinsic-promises
 
+_Supports node versions back to v6, and 0 runtime dependencies_
+
 `extrinsic-promises` is a JavaScript module that provides a convenient promises anti-pattern
 for those times when you just really need to settle (fulfill or reject) your promise from
 _outside_ the promise's work-function.
@@ -26,32 +28,32 @@ npm install --save extrinsic-promises
 Basic usage:
 
 ```javascript
-import ExtrinsicPromise from 'extrinsic-promises'
+import ExtrinsicPromise from "extrinsic-promises";
 
-const promise = new ExtrinsicPromise()
+const promise = new ExtrinsicPromise();
 
 // Setup handlers for the promise, just like you normally would.
-promise.then((value) => {
-  console.log('Promise was fulfilled with value:', value)
-})
+promise.then(value => {
+    console.log("Promise was fulfilled with value:", value);
+});
 
 // Call the public methods on the promise to fulfill/resolve it.
-promise.fulfill('Some value')
+promise.fulfill("Some value");
 ```
 
 Rejecting a promise:
 
 ```javascript
-const promise = new ExtrinsicPromise()
+const promise = new ExtrinsicPromise();
 
 // Register your on-reject handler for the promise,
 // just like you normally would.
-promise.then(null, (reason) => {
-  console.log('Promise was reject for reason:', reason)
-})
+promise.then(null, reason => {
+    console.log("Promise was reject for reason:", reason);
+});
 
 // Call the public methods on the promise to reject it.
-promise.reject(new Error('some reason'))
+promise.reject(new Error("some reason"));
 ```
 
 ## Getting an Extended API
@@ -61,23 +63,23 @@ you want the convenience methods provided by your favoritate promises library, y
 library to wrap an `ExtrinsicPromise` appropriately:
 
 ```javascript
-import Promise from 'bluebird'
-import ExtrinsicPromise from 'extrinsic-promises'
+import Promise from "bluebird";
+import ExtrinsicPromise from "extrinsic-promises";
 
-const exPromise = new ExtrinsicPromise()
-const bluebirdPromise = Promise.fulfill(exPromise)
+const exPromise = new ExtrinsicPromise();
+const bluebirdPromise = Promise.fulfill(exPromise);
 ```
 
 Or, if the library doesn't provide a method like that, you can use the standard `Promise` constructor
 as follows:
 
 ```javascript
-import ExtrinsicPromise from 'extrinsic-promises'
+import ExtrinsicPromise from "extrinsic-promises";
 
-const exPromise = new ExtrinsicPromise()
+const exPromise = new ExtrinsicPromise();
 const otherPromise = new Promise((fulfill, reject) => {
-  exPromise.then(fulfill, reject)
-})
+    exPromise.then(fulfill, reject);
+});
 ```
 
 ## API
@@ -97,10 +99,10 @@ fulfillment occurs (i.e., synchronously or asynchronously).
 This method is already bound and can be used correctly as a function reference. E.g.,:
 
 ```javascript
-const exPromise = new ExtrinsicPromise()
-const fulfillLater = exPromise.fulfill
+const exPromise = new ExtrinsicPromise();
+const fulfillLater = exPromise.fulfill;
 // ...
-fulfillLater(value)  // correctly fulfills exPromise.
+fulfillLater(value); // correctly fulfills exPromise.
 ```
 
 ### `ExtrinsicPromise::reject([forReason])`
@@ -111,10 +113,10 @@ no gaurantee as to when rejection occurs (i.e., synchronously or asynchronously)
 This method is already bound and can be used correctly as a function reference. E.g.,:
 
 ```javascript
-const exPromise = new ExtrinsicPromise()
-const rejectLater = exPromise.reject
+const exPromise = new ExtrinsicPromise();
+const rejectLater = exPromise.reject;
 // ...
-rejectLater(reason)  // correctly rejects exPromise.
+rejectLater(reason); // correctly rejects exPromise.
 ```
 
 ### `ExtrinsicPromise::adopt(thennable)`
@@ -124,8 +126,8 @@ settled. This is a convenience for using this extrinsic promise's `fulfill` and 
 and on-reject handlers, respectively, of the given thennable, as follows:
 
 ```javascript
-const exPromise = new ExtrinsicPromise()
-thennable.then(exPromise.fulfill, exPromise.reject)
+const exPromise = new ExtrinsicPromise();
+thennable.then(exPromise.fulfill, exPromise.reject);
 ```
 
 ### `ExtrinsicPromise::work(workfunction)`
