@@ -15,12 +15,11 @@
   "main": "src/index.js",
   "scripts": {
     "clean": "rimraf coverage/ .nyc_output/ dist/",
-    "check:lint:ci": "yamllint .travis.yml",
-    "check:lint:changes": "yamllint CHANGES.yaml",
-    "check:lint:readme": "remark --no-stdout README.md",
-    "check:lint:js": "eslint --max-warnings 0 --no-error-on-unmatched-pattern --format codeframe ./ src/ test/ \"./*.js\"",
-    "check:lint": "npm-run-all --parallel check:lint:*",
-    "check": "npm-run-all --parallel check:*",
+    "check:ci": "yamllint .travis.yml",
+    "check:changes": "yamllint CHANGES.yaml",
+    "check:readme": "remark --no-stdout README.md",
+    "check:js": "eslint --max-warnings 0 --no-error-on-unmatched-pattern --format codeframe ./stryker.conf.js src/ test/ \"./*.js\"",
+    "check": "npm-run-all check:*",
     "test": "nyc mocha ./test/src/**/*.spec.js",
     "verify": "npm-run-all check test",
     "mutation-test": "stryker run",
@@ -38,7 +37,7 @@
     "url": "https://github.com/mearns/extrinsic-promises.git"
   },
   "engines": {
-    "node": ">6.0.0 <12"
+    "node": ">=10.0.0 <16"
   },
   "license": "MIT",
   "nyc": {
