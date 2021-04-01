@@ -1,12 +1,23 @@
 PreRelease:
-  changes:
-    - type: patch
-      description: Automated updates of several npm audit issues (70 low, 1 moderate)
-      commits: [5082eb266aeb43ca817863cf4aa62a9aca9b08b1]
-    - type: patch
-      descrition: update most dev dependencies to latest.
-      commits: [986ed2a1de5cd9aade7bc024eb2418546e1f5c82]
+  changes: []
 Releases:
+  - release: 9
+    version: 2.2.1
+    date: 2021-04-01
+    description: >-
+      Upgrade all dev dependencies to latest versions and remove babel.
+    changes:
+      - type: patch
+        description: Automated updates of several npm audit issues (70 low, 1 moderate)
+        commits: [5082eb266aeb43ca817863cf4aa62a9aca9b08b1]
+      - type: patch
+        descrition: update most dev dependencies to latest.
+        commits: [986ed2a1de5cd9aade7bc024eb2418546e1f5c82]
+      - type: major
+        description: Remove support for babel
+        commits:
+          - a504d0990d50429989632ffca23d77bc477c84e8
+          - 692fb9eade5498670706c6d12c44cc944700a430
   - release: 8
     version: 2.2.0
     date: 2019-10-07

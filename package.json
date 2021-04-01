@@ -24,6 +24,7 @@
     "verify": "npm-run-all check test",
     "mutation-test": "stryker run",
     "compile": "echo \"Nothing to compile, babel has been removed: OK.\"",
+    "ci-best": "./dev-scripts/choose-ci.sh",
     "build": "npm-run-all clean compile verify",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
@@ -37,7 +38,7 @@
     "url": "https://github.com/mearns/extrinsic-promises.git"
   },
   "engines": {
-    "node": ">=10.0.0 <16"
+    "node": ">=6.0.0 <16"
   },
   "license": "MIT",
   "nyc": {
