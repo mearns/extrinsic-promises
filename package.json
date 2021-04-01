@@ -1,6 +1,6 @@
 {
   "name": "extrinsic-promises",
-  "version": "2.2.1-dev",
+  "version": "2.2.1",
   "description": "A convenient promises anti-pattern: promises you can settle from outside the promise.",
   "keywords": [
     "promise",
