@@ -1,5 +1,11 @@
 PreRelease:
-  changes: []
+  changes:
+    - type: patch
+      description: Automated updates of several npm audit issues (70 low, 1 moderate)
+      commits: [5082eb266aeb43ca817863cf4aa62a9aca9b08b1]
+    - type: patch
+      descrition: update most dev dependencies to latest.
+      commits: [986ed2a1de5cd9aade7bc024eb2418546e1f5c82]
 Releases:
   - release: 8
     version: 2.2.0
