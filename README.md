@@ -1,3 +1,4 @@
+![Static Badge](https://img.shields.io/badge/deprecated-use_built--in-red)
 [![JavaScript Standard Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 # extrinsic-promises
