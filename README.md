@@ -3,7 +3,12 @@
 
 # extrinsic-promises
 
-_Supports node versions back to v6, and 0 runtime dependencies_
+_Supports node versions from v6 up to v22, and 0 runtime dependencies_
+
+**Deprecated:** The functionality provided by this module is now available through the built-in
+`Promise` object using the
+[`withResolvers` function (MDN documentation link)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/withResolvers).
+As such, this module is being deprecated and will no longer be maintained. See below for migration patterns.
 
 `extrinsic-promises` is a JavaScript module that provides a convenient promises anti-pattern
 for those times when you just really need to settle (fulfill or reject) your promise from
@@ -17,11 +22,135 @@ to settle the state of the promise.
 but there are some situations that can't reasonably be handled with traditional promises (at
 least not without re-implementing extrinsic-promises.)
 
+## Migrating from this package to built-in functionality
+
+As of 2023, the JavaScript standard defines a static function called `withResolvers` on the
+built-in `Promise` object. This function provides the same functionality as `extrinsic-promises`,
+and should be preferred going forward. The function has widespread browser support and is available
+by default in NodeJS as of v22. It is also available behind a feature flag as early as Node v21.7.1.
+
+While the interface is not a drop-in replacement, all the functionality is easily supported.
+
+### Migration: Creating and settling an externally-settlable promise
+
+Old way:
+
+```javascript
+import ExtrinsicPromise from "extrinsic-promises";
+
+const promise = new ExtrinsicPromise();
+promise.fulfill("some value");
+promise.reject(new Error("some reason"));
+```
+
+New way:
+
+```javascript
+const { promise, resolve, reject } = Promise.withResolvers();
+resolve("some value");
+reject(new Error("some reason"));
+```
+
+### Migration: adopting a thennable
+
+Old way:
+
+```javascript
+import ExtrinsicPromise from "extrinsic-promises";
+
+const promise = new ExtrinsicPromise();
+
+// ...thennable is a Promise-like object with a then/2 method...
+promise.adopt(thennable);
+```
+
+New way:
+
+```javascript
+const { promise, resolve, reject } = Promise.withResolvers();
+
+// ...thennable is a Promise-like object with a then/2 method...
+thennable.then(resolve, reject);
+```
+
+### Migration: replacing the `work` method
+
+Old way:
+
+```javascript
+import ExtrinsicPromise from "extrinsic-promises";
+
+const promise = new ExtrinsicPromise();
+
+const myWorkFunction = (fulfill, reject) => {
+    // ... do some work and then calls either `fulfill` or `reject`.
+};
+promise.work(myWork);
+```
+
+New way:
+
+```javascript
+const { promise, resolve, reject } = Promise.withResolvers();
+
+const myWorkFunction = (fulfill, reject) => {
+    // ... do some work and then calls either `fulfill` or `reject`.
+};
+setImmediate(() => {
+    try {
+        myWorkFunction(resolve, reject);
+    } catch (error) {
+        reject(error);
+    }
+});
+```
+
+Or, new way:
+
+```javascript
+const myWorkFunction = (fulfill, reject) => {
+    // ... do some work and then calls either `fulfill` or `reject`.
+};
+
+const promise = new Promise(myWorkFunction);
+```
+
+### Migration: Hiding the Extrinsic methods
+
+Old way:
+
+```javascript
+import ExtrinsicPromise from "extrinsic-promises";
+
+const exPromise = new ExtrinsicPromise();
+const p = exPromise.hide();
+p.fulfill; // undefined
+p.reject; // undefined
+p.adopt; // undefined
+p.work; // undefined
+p.hide; // undefined
+```
+
+When creaeting a promise using `withResolvers`, there's no need to
+hide anything, since the `"promise"` property is already just a plain
+Promise.
+
+New way:
+
+````javascript
+const { promise: p } = Promise.withResolvers();
+p.fulfill; // undefined
+p.reject; // undefined
+p.adopt; // undefined
+p.work; // undefined
+p.hide; // undefined
+```
+
 ## Installation
 
 ```console
 npm install --save extrinsic-promises
-```
+````
 
 ## Example
 
