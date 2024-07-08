@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/mearns/extrinsic-promises.svg?branch=master)](https://travis-ci.org/mearns/extrinsic-promises)
 [![JavaScript Standard Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 # extrinsic-promises
